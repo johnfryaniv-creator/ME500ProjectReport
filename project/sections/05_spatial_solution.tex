@@ -1,0 +1,63 @@
+\section{Spatial solution and boundary conditions}
+
+\subsection{General solution}
+
+The characteristic equation of \cref{eq:helmholtz} is $s^2 + k^2 = 0$, so
+$s = \pm ik$. The general solution is therefore
+\begin{equation}
+  X(x) = A\cos(kx) + B\sin(kx),
+  \label{eq:X_general}
+\end{equation}
+with complex constants $A$ and $B$.
+
+\subsection{Transferring the boundary conditions to \texorpdfstring{$X$}{X}}
+
+Substitute the ansatz \cref{eq:ansatz} into the complex boundary conditions
+in \cref{eq:complex_problem}:
+\begin{align}
+  X(0)\,e^{i\omega t} = U_0\,e^{i\omega t} \quad&\Longrightarrow\quad X(0) = U_0, \label{eq:Xbc0}\\
+  X(L)\,e^{i\omega t} = 0 \quad&\Longrightarrow\quad X(L) = 0. \label{eq:XbcL}
+\end{align}
+
+\subsection{Solving for the constants}
+
+\paragraph{At $x=0$.} Substituting $x=0$ into \cref{eq:X_general} and using
+$\cos 0 = 1$, $\sin 0 = 0$:
+\begin{equation}
+  X(0) = A = U_0.
+\end{equation}
+
+\paragraph{At $x=L$.} Substituting $x=L$ and $A=U_0$:
+\begin{equation}
+  U_0\cos(kL) + B\sin(kL) = 0
+  \quad\Longrightarrow\quad
+  B = -U_0\,\frac{\cos(kL)}{\sin(kL)}.
+\end{equation}
+Division by $\sin(kL)$ is always valid here. For $\alpha>0$,
+$|\sin(kL)|^2 = \sin^2(\beta L) + \sinh^2(\alpha L) > 0$
+(shown in \cref{eq:abs_sin} below), so the damped rod has no true resonance.
+
+\paragraph{Assembling.} Substituting $A$ and $B$ into \cref{eq:X_general}:
+\begin{equation}
+  X(x) = U_0\cos(kx) - U_0\frac{\cos(kL)}{\sin(kL)}\sin(kx)
+       = \frac{U_0}{\sin(kL)}\Big[\sin(kL)\cos(kx) - \cos(kL)\sin(kx)\Big].
+\end{equation}
+The bracket is the angle-difference identity
+$\sin(a-b) = \sin a\cos b - \cos a\sin b$ with $a = kL$ and $b = kx$, which
+holds for complex arguments. Hence
+\begin{equation}
+  \boxed{\;X(x) = U_0\,\frac{\sin\!\big(k(L-x)\big)}{\sin(kL)}\;}
+  \label{eq:X_solution}
+\end{equation}
+\Cref{eq:X_solution} satisfies both conditions on sight: $X(0) = U_0$ and
+$X(L) = U_0\sin(0)/\sin(kL) = 0$.
+
+\subsection{Complex solution}
+
+Substituting \cref{eq:X_solution} into \cref{eq:ansatz} gives
+\begin{equation}
+  \tilde u(x,t) = U_0\,\frac{\sin\!\big(k(L-x)\big)}{\sin(kL)}\, e^{i\omega t},
+  \qquad
+  u(x,t) = \Real\!\left\{ U_0\,\frac{\sin\!\big(k(L-x)\big)}{\sin(kL)}\, e^{i\omega t} \right\}.
+  \label{eq:u_complex}
+\end{equation}

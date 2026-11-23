@@ -1,0 +1,58 @@
+\section{Explicit real form}
+
+\subsection{Sine of a complex argument}
+
+For real $a$ and $b$, using $\cos(ib) = \cosh b$ and $\sin(ib) = i\sinh b$:
+\begin{equation}
+  \sin(a - ib) = \sin a\cos(ib) - \cos a\sin(ib)
+               = \sin a\cosh b - i\cos a\sinh b.
+\end{equation}
+With $k = \beta - i\alpha$ and a real length $z$, set $a = \beta z$ and
+$b = \alpha z$:
+\begin{equation}
+  S(z) \equiv \sin(kz) = \sin(\beta z)\cosh(\alpha z) - i\,\cos(\beta z)\sinh(\alpha z).
+  \label{eq:S}
+\end{equation}
+
+\paragraph{Modulus.}
+\begin{align}
+  |S(z)|^2 &= \sin^2(\beta z)\cosh^2(\alpha z) + \cos^2(\beta z)\sinh^2(\alpha z) \nonumber\\
+           &= \sin^2(\beta z)\left[1 + \sinh^2(\alpha z)\right] + \left[1 - \sin^2(\beta z)\right]\sinh^2(\alpha z) \nonumber\\
+           &= \sin^2(\beta z) + \sinh^2(\alpha z) \label{eq:abs_sin}\\
+           &= \tfrac{1}{2}\left[\cosh(2\alpha z) - \cos(2\beta z)\right], \label{eq:abs_sin_double}
+\end{align}
+where the last line uses $\sin^2\theta = \tfrac12(1-\cos2\theta)$ and
+$\sinh^2\theta = \tfrac12(\cosh 2\theta - 1)$.
+
+\paragraph{Argument.}
+From \cref{eq:S},
+\begin{equation}
+  \arg S(z) = -\,\operatorname{atan2}\!\Big(\cos(\beta z)\sinh(\alpha z),\; \sin(\beta z)\cosh(\alpha z)\Big),
+  \label{eq:argS}
+\end{equation}
+where $\operatorname{atan2}(y, x)$ is the four-quadrant arctangent, the
+angle of the point $(x, y)$.
+
+\subsection{Amplitude and phase}
+
+Define the complex transfer function
+\begin{equation}
+  G(x) = \frac{S(L-x)}{S(L)} = |G(x)|\,e^{i\theta(x)}.
+\end{equation}
+Then $\tilde u = U_0\,|G|\,e^{i(\omega t + \theta)}$, and taking the real part gives
+\begin{equation}
+  \boxed{\;u(x,t) = U_0\,\mathcal{A}(x)\cos\!\big(\omega t + \theta(x)\big)\;}
+  \label{eq:u_real}
+\end{equation}
+with amplitude ratio, from \cref{eq:abs_sin_double},
+\begin{equation}
+  \mathcal{A}(x) = |G(x)| = \sqrt{\frac{\cosh\!\big(2\alpha(L-x)\big) - \cos\!\big(2\beta(L-x)\big)}
+                                     {\cosh(2\alpha L) - \cos(2\beta L)}},
+  \label{eq:amplitude}
+\end{equation}
+and phase, from \cref{eq:argS},
+\begin{equation}
+  \theta(x) = \arg S(L-x) - \arg S(L).
+  \label{eq:phase}
+\end{equation}
+Here $\alpha$ and $\beta$ are given by \cref{eq:alpha_beta}.

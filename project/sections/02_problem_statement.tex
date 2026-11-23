@@ -1,0 +1,12 @@
+\section{Problem statement}
+
+We seek the solution of \cref{eq:pde} on $0 \le x \le L$ subject to
+\begin{align}
+  u(0,t) &= U_0 \cos(\omega t), \label{eq:bc0}\\
+  u(L,t) &= 0. \label{eq:bcL}
+\end{align}
+The left end is driven harmonically at frequency $\omega$ with amplitude
+$U_0$, and the right end is fixed. Because the rod is damped ($\eta>0$), any
+transient that depends on the initial conditions decays over time. What
+remains is the \emph{steady-state} response, which oscillates at the driving
+frequency $\omega$. This steady state is what we derive.

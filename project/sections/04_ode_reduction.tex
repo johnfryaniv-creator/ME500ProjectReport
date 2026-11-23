@@ -1,0 +1,105 @@
+\section{Reduction to an ordinary differential equation}
+
+\subsection{Substitution}
+
+Substituting \cref{eq:utt,eq:uxx,eq:uxxt} into the PDE in \cref{eq:complex_problem}:
+\begin{equation}
+  -\omega^2 X\, e^{i\omega t}
+  = c^2 X''\, e^{i\omega t} + \nu\,(i\omega)\, X''\, e^{i\omega t}.
+\end{equation}
+Since $e^{i\omega t} \neq 0$ for all $t$, divide it out:
+\begin{equation}
+  -\omega^2 X = \left(c^2 + i\omega\nu\right) X''.
+\end{equation}
+Collect terms on one side:
+\begin{equation}
+  \left(c^2 + i\omega\nu\right) X'' + \omega^2 X = 0.
+\end{equation}
+Divide by $(c^2 + i\omega\nu)$, which is nonzero because $c^2>0$:
+\begin{equation}
+  X'' + \frac{\omega^2}{c^2 + i\omega\nu}\, X = 0.
+\end{equation}
+
+\subsection{Complex wavenumber}
+
+Define the complex wavenumber $k$ by
+\begin{equation}
+  k^2 = \frac{\omega^2}{c^2 + i\omega\nu}.
+  \label{eq:k2_def}
+\end{equation}
+Using $\nu = c^2\tau$ from \cref{eq:params}, factor out $c^2$:
+\begin{equation}
+  k^2 = \frac{\omega^2}{c^2\left(1 + i\omega\tau\right)}.
+  \label{eq:k2_tau}
+\end{equation}
+The spatial amplitude then satisfies the Helmholtz equation
+\begin{equation}
+  \boxed{\;X'' + k^2 X = 0\;}
+  \label{eq:helmholtz}
+\end{equation}
+\Cref{eq:k2_tau} can also be read as an elastic wavenumber $\omega/c^*$
+with a complex wave speed $c^{*2} = E^*/\rho$, where $E^* = E(1+i\omega\tau)$
+is the complex modulus of the Kelvin--Voigt material.
+
+Physically, the dashpot makes $k$ complex, and the imaginary part of $k$
+produces spatial decay.
+
+\subsection{Real and imaginary parts of \texorpdfstring{$k$}{k}}
+
+Write $k = \beta - i\alpha$, where $\beta$ is the propagation constant and
+$\alpha$ is the attenuation constant. We choose the sign of the root so that
+$\alpha, \beta > 0$. Because $\sin(kz)$ appears below only in a ratio that is
+even in $k$, the final answer does not depend on which square root is taken.
+
+\paragraph{Polar form of the denominator.}
+Write $1 + i\omega\tau = r\,e^{i\phi}$, where
+\begin{equation}
+  r = \sqrt{1 + \omega^2\tau^2}, \qquad
+  \phi = \arctan(\omega\tau) \in \left[0, \tfrac{\pi}{2}\right),
+  \qquad
+  \cos\phi = \frac{1}{r}.
+  \label{eq:polar}
+\end{equation}
+Then from \cref{eq:k2_tau},
+\begin{equation}
+  k^2 = \frac{\omega^2}{c^2}\, r^{-1} e^{-i\phi}
+  \quad\Longrightarrow\quad
+  k = \frac{\omega}{c}\, r^{-1/2}\, e^{-i\phi/2}
+    = \frac{\omega}{c}\, r^{-1/2}\left[\cos\tfrac{\phi}{2} - i\sin\tfrac{\phi}{2}\right].
+\end{equation}
+
+\paragraph{Half-angle identities.}
+Using $\cos\phi = 1/r$:
+\begin{equation}
+  \cos\tfrac{\phi}{2} = \sqrt{\frac{1+\cos\phi}{2}} = \sqrt{\frac{r+1}{2r}},
+  \qquad
+  \sin\tfrac{\phi}{2} = \sqrt{\frac{1-\cos\phi}{2}} = \sqrt{\frac{r-1}{2r}}.
+\end{equation}
+Multiplying each by $r^{-1/2}$ gives $r^{-1/2}\sqrt{(r\pm1)/(2r)} = \frac{1}{r}\sqrt{(r\pm1)/2}$, so
+\begin{equation}
+  \boxed{\;
+  \beta = \frac{\omega}{c\,r}\sqrt{\frac{r+1}{2}},
+  \qquad
+  \alpha = \frac{\omega}{c\,r}\sqrt{\frac{r-1}{2}},
+  \qquad
+  r = \sqrt{1+\omega^2\tau^2}
+  \;}
+  \label{eq:alpha_beta}
+\end{equation}
+
+\paragraph{Check.}
+Squaring, $k^2 = (\beta - i\alpha)^2 = (\beta^2 - \alpha^2) - 2i\alpha\beta$. From
+\cref{eq:alpha_beta},
+\begin{align}
+  \beta^2 - \alpha^2 &= \frac{\omega^2}{c^2 r^2}\cdot\frac{(r+1)-(r-1)}{2}
+                      = \frac{\omega^2}{c^2 r^2}, \\
+  2\alpha\beta &= \frac{2\omega^2}{c^2 r^2}\cdot\frac{\sqrt{r^2-1}}{2}
+                = \frac{\omega^2}{c^2 r^2}\,\omega\tau,
+\end{align}
+where $\sqrt{r^2-1} = \omega\tau$. Rationalizing \cref{eq:k2_tau} directly
+gives
+\begin{equation}
+  k^2 = \frac{\omega^2}{c^2}\cdot\frac{1 - i\omega\tau}{1+\omega^2\tau^2}
+      = \frac{\omega^2}{c^2 r^2} - i\,\frac{\omega^2}{c^2 r^2}\,\omega\tau,
+\end{equation}
+which matches term by term.

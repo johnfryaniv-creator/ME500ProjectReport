@@ -1,0 +1,44 @@
+\section{Harmonic ansatz}
+
+\subsection{Complexifying the boundary data}
+
+Using Euler's formula, $e^{i\omega t} = \cos(\omega t) + i\sin(\omega t)$, so
+\begin{equation}
+  U_0\cos(\omega t) = \Real\!\left\{ U_0\, e^{i\omega t} \right\}.
+  \label{eq:euler_bc}
+\end{equation}
+\Cref{eq:pde} is linear and all of its coefficients ($c^2$, $\nu$) are
+real. If a complex function $\tilde u(x,t)$ satisfies \cref{eq:pde}, then its
+real and imaginary parts each satisfy \cref{eq:pde} separately. We may
+therefore solve the complex problem
+\begin{equation}
+  \pdd{\tilde u}{t} = c^2\,\pdd{\tilde u}{x} + \nu\,\frac{\partial^3 \tilde u}{\partial x^2\,\partial t},
+  \qquad
+  \tilde u(0,t) = U_0\, e^{i\omega t},
+  \qquad
+  \tilde u(L,t) = 0,
+  \label{eq:complex_problem}
+\end{equation}
+and recover the physical solution as $u = \Real\{\tilde u\}$.
+
+\subsection{Separable time-harmonic form}
+
+Since the forcing varies as $e^{i\omega t}$, we assume
+\begin{equation}
+  \tilde u(x,t) = X(x)\, e^{i\omega t},
+  \label{eq:ansatz}
+\end{equation}
+where $X(x)$ is a complex-valued spatial amplitude to be determined.
+
+\subsection{Computing each derivative}
+
+Differentiate \cref{eq:ansatz} term by term. Each time derivative brings down a
+factor of $i\omega$:
+\begin{align}
+  \pd{\tilde u}{t} &= i\omega\, X(x)\, e^{i\omega t}, \\
+  \pdd{\tilde u}{t} &= (i\omega)^2 X(x)\, e^{i\omega t} = -\omega^2 X(x)\, e^{i\omega t}, \label{eq:utt}\\
+  \pdd{\tilde u}{x} &= X''(x)\, e^{i\omega t}, \label{eq:uxx}\\
+  \frac{\partial^3 \tilde u}{\partial x^2\,\partial t}
+    &= \pd{}{t}\!\left( X''(x)\, e^{i\omega t} \right)
+     = i\omega\, X''(x)\, e^{i\omega t}. \label{eq:uxxt}
+\end{align}

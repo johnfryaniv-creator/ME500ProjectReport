@@ -1,0 +1,40 @@
+\section{Governing equation}
+
+Consider a uniform rod of length $L$, density $\rho$, Young's modulus $E$
+and viscosity coefficient $\eta$, undergoing small longitudinal displacement
+$u(x,t)$. The Kelvin--Voigt constitutive law places a spring and a dashpot
+in parallel:
+\begin{equation}
+  \sigma = E\,\varepsilon + \eta\,\pd{\varepsilon}{t},
+  \qquad
+  \varepsilon = \pd{u}{x}.
+  \label{eq:constitutive}
+\end{equation}
+Substituting $\varepsilon = \partial u/\partial x$ into \cref{eq:constitutive} gives
+\begin{equation}
+  \sigma = E\,\pd{u}{x} + \eta\,\frac{\partial^2 u}{\partial x\,\partial t}.
+  \label{eq:stress_u}
+\end{equation}
+Linear momentum balance for a slice of the rod (no body force) is
+\begin{equation}
+  \rho\,\pdd{u}{t} = \pd{\sigma}{x}.
+  \label{eq:momentum}
+\end{equation}
+Differentiating \cref{eq:stress_u} with respect to $x$ and substituting into
+\cref{eq:momentum}:
+\begin{equation}
+  \rho\,\pdd{u}{t} = E\,\pdd{u}{x} + \eta\,\frac{\partial^3 u}{\partial x^2\,\partial t}.
+\end{equation}
+Dividing by $\rho$ and defining
+\begin{equation}
+  c^2 = \frac{E}{\rho}, \qquad
+  \nu = \frac{\eta}{\rho}, \qquad
+  \tau = \frac{\eta}{E} = \frac{\nu}{c^2},
+  \label{eq:params}
+\end{equation}
+where $c$ is the elastic wave speed and $\tau$ is the retardation time, we
+obtain the Kelvin--Voigt (damped) wave equation
+\begin{equation}
+  \boxed{\;\pdd{u}{t} = c^2\,\pdd{u}{x} + \nu\,\frac{\partial^3 u}{\partial x^2\,\partial t}\;}
+  \label{eq:pde}
+\end{equation}

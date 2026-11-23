@@ -1,0 +1,51 @@
+\section{Checks and limiting cases}
+
+\subsection{Boundary conditions}
+At $x=0$: $G(0) = S(L)/S(L) = 1$, so $\mathcal{A}=1$, $\theta=0$ and
+$u(0,t) = U_0\cos\omega t$, which satisfies \cref{eq:bc0}.
+At $x=L$: $S(0) = 0$, so $\mathcal{A}(L)=0$ and $u(L,t)=0$, which satisfies \cref{eq:bcL}.
+
+\subsection{Elastic limit, \texorpdfstring{$\eta \to 0$}{eta -> 0}}
+With $\tau\to0$ we get $r\to1$, $\alpha\to0$ and $\beta\to\omega/c$. Then
+$S(z)\to\sin(\omega z/c)$ is real, and
+\begin{equation}
+  u(x,t) \to U_0\,\frac{\sin\!\big(\omega(L-x)/c\big)}{\sin(\omega L/c)}\cos(\omega t).
+\end{equation}
+This is the classical undamped standing wave. It blows up at the resonances
+$\omega_n = n\pi c/L$, where $\sin(\omega L/c) = 0$. With any damping
+($\alpha>0$), \cref{eq:abs_sin} keeps the denominator bounded away from zero
+and the resonant peaks become finite.
+
+\subsection{Light damping, \texorpdfstring{$\omega\tau \ll 1$}{omega tau << 1}}
+Expand $r = \sqrt{1+\omega^2\tau^2} \approx 1 + \tfrac12\omega^2\tau^2$. Then
+$r - 1 \approx \tfrac12\omega^2\tau^2$, so to leading order
+\begin{equation}
+  \beta \approx \frac{\omega}{c}, \qquad
+  \alpha \approx \frac{\omega}{c}\sqrt{\frac{\omega^2\tau^2}{4}} = \frac{\omega^2\tau}{2c}.
+\end{equation}
+The attenuation grows as $\omega^2$, a characteristic signature of
+Kelvin--Voigt damping.
+
+\subsection{Long or heavily damped rod, \texorpdfstring{$\alpha(L-x) \gg 1$}{alpha(L-x) >> 1}}
+Write $\sin(kz) = \big(e^{ikz} - e^{-ikz}\big)/(2i)$. Since
+$ikz = i\beta z + \alpha z$, the term $e^{ikz}$ grows like $e^{\alpha z}$ and
+dominates when $\alpha z \gg 1$. Keeping only that term,
+\begin{equation}
+  G(x) \approx \frac{e^{ik(L-x)}}{e^{ikL}} = e^{-ikx} = e^{-\alpha x}\,e^{-i\beta x},
+\end{equation}
+so
+\begin{equation}
+  u(x,t) \approx U_0\, e^{-\alpha x}\cos(\omega t - \beta x).
+\end{equation}
+This is a single wave travelling to the right and decaying as it goes. The
+wave reflected from $x = L$ has decayed to negligible size before it returns,
+so the far boundary is effectively invisible.
+
+\subsection{Travelling-wave interpretation}
+In general, \cref{eq:X_solution} can be written as
+\begin{equation}
+  X(x) = \frac{U_0}{2i\sin(kL)}\Big[e^{ik(L-x)} - e^{-ik(L-x)}\Big].
+\end{equation}
+The first term is the incident wave travelling in $+x$. The second is its
+reflection from the fixed end, inverted in sign so that the two cancel at
+$x=L$.

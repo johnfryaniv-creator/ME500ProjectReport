@@ -1,0 +1,35 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{bm}
+\usepackage{float}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usepackage[hidelinks]{hyperref}
+\usepackage{cleveref}
+
+\newcommand{\Real}{\operatorname{Re}}
+\newcommand{\Imag}{\operatorname{Im}}
+\newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\pdd}[2]{\frac{\partial^2 #1}{\partial #2^2}}
+
+\title{Steady-State Harmonic Response of a Kelvin--Voigt Rod:\\
+A Step-by-Step Derivation}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\input{sections/01_governing_equation}
+\input{sections/02_problem_statement}
+\input{sections/03_harmonic_ansatz}
+\input{sections/04_ode_reduction}
+\input{sections/05_spatial_solution}
+\input{sections/06_explicit_real_form}
+\input{sections/07_checks_limiting_cases}
+\input{sections/08_illustration}
+\input{sections/09_summary}
+
+\end{document}

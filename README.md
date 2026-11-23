@@ -1,0 +1,303 @@
+# ME500 Project Report
+
+LaTeX source for the ME500 project report, *Steady-State Harmonic Response of a Kelvin–Voigt Rod*.
+Two people work on this repository at the same time, so this README covers:
+
+1. [Setting up your computer](#1-setting-up-your-computer) (MiKTeX, Strawberry Perl, VS Code + LaTeX Workshop, Git)
+2. [Connecting Git to GitHub and cloning the repo](#2-connecting-git-to-github-and-cloning-the-repo)
+3. [Our workflow for avoiding conflicts](#3-workflow-how-to-avoid-conflicts)
+4. [Useful LaTeX Workshop features](#4-useful-latex-workshop-features)
+
+---
+
+## Repository layout
+
+```
+ME500ProjectReport/
+├── .gitignore                 # keeps build files (.aux, .log, .pdf, ...) out of Git
+├── README.md
+└── project/
+    ├── main.tex               # preamble + \input of every section (the file you build)
+    └── sections/
+        ├── 01_governing_equation.tex
+        ├── 02_problem_statement.tex
+        ├── 03_harmonic_ansatz.tex
+        ├── 04_ode_reduction.tex
+        ├── 05_spatial_solution.tex
+        ├── 06_explicit_real_form.tex
+        ├── 07_checks_limiting_cases.tex
+        ├── 08_illustration.tex
+        └── 09_summary.tex
+```
+
+`main.tex` only holds the preamble (packages, custom commands, title) and a list of
+`\input{sections/...}` lines. All of the writing goes in the files under `sections/`.
+
+---
+
+## 1. Setting up your computer
+
+Install these in order. All of them are free.
+
+### 1.1 MiKTeX (the LaTeX distribution)
+
+1. Go to <https://miktex.org/download> and download the **Windows** installer (Basic MiKTeX Installer).
+2. Run the installer:
+   - Choose **"Install only for me"**. This avoids admin permission problems later.
+   - When asked **"Install missing packages on-the-fly"**, choose **Yes** (or "Always").
+     Without this, compiling stops every time a package such as `pgfplots` is missing.
+3. Finish the installation.
+
+### 1.2 Update MiKTeX
+
+A fresh install is usually out of date, and an outdated MiKTeX is the most common reason a build fails.
+
+1. Open **MiKTeX Console** from the Start menu.
+2. If it asks you to, click **"Check for updates"** first. This updates MiKTeX itself.
+3. Go to the **Updates** tab → **Check for updates** → **Update now**.
+4. Close MiKTeX Console and open it again. Repeat step 3 until it says there are no updates.
+5. (Optional) Under **Settings → General**, check that "Package installation" is set to **Always install missing packages on-the-fly**.
+
+Run the update again every few weeks, or whenever a build fails with a strange package error.
+
+### 1.3 Strawberry Perl (needed by `latexmk`)
+
+LaTeX Workshop builds the PDF with `latexmk`, and `latexmk` is a Perl script. Windows
+doesn't come with Perl, so we install Strawberry Perl.
+
+1. Go to <https://strawberryperl.com/>.
+2. Download the **MSI installer** for 64-bit Windows (the file ends in `.msi`, not the "portable" `.zip`).
+3. Run the MSI and keep all the default options.
+4. **Restart your computer** (or at least close every VS Code and terminal window) so the new `PATH` takes effect.
+5. To check it worked, open a new PowerShell window and run:
+   ```powershell
+   perl -v
+   latexmk -v
+   ```
+   Both commands should print a version number. If `latexmk` fails, open MiKTeX Console → **Packages**, search for `latexmk`, and install it.
+
+### 1.4 VS Code + LaTeX Workshop (by James Yu)
+
+1. Install **Visual Studio Code** from <https://code.visualstudio.com/> if you don't have it.
+2. In VS Code, open the **Extensions** panel (`Ctrl+Shift+X`).
+3. Search for **LaTeX Workshop**. Install the one whose publisher is **James Yu**. It has millions of installs.
+4. Reload VS Code if it asks you to.
+
+A **TeX** icon now appears in the left Activity Bar. That's the LaTeX Workshop sidebar.
+
+### 1.5 Git for Windows
+
+1. Go to <https://git-scm.com/download/win> and download the **64-bit Git for Windows Setup**.
+2. Run the installer. The defaults are fine. A few screens to pay attention to:
+   - **Default editor**: pick **"Use Visual Studio Code as Git's default editor"**.
+   - **Initial branch name**: choose "Override" and type `main` (this matches our repo).
+   - **Adjusting your PATH**: keep **"Git from the command line and also from 3rd-party software"**.
+   - **Credential helper**: keep **Git Credential Manager**. This is what lets you sign in to GitHub through your browser.
+3. Finish the installation, then restart VS Code.
+4. Check it worked by opening a new terminal and running:
+   ```powershell
+   git --version
+   ```
+
+---
+
+## 2. Connecting Git to GitHub and cloning the repo
+
+### 2.1 Create a GitHub account / get access
+
+- If you don't have one, create a free account at <https://github.com>.
+- **Repository owner:** add your partner on GitHub under the repo's
+  **Settings → Collaborators → Add people**.
+- **Partner:** accept the invitation, which arrives by email or appears at <https://github.com/notifications>.
+  You can't push until you accept it.
+
+### 2.2 Tell Git who you are (one-time)
+
+Open a terminal (in VS Code: **Terminal → New Terminal**, or `` Ctrl+` ``) and run, using **your own** name and the email tied to your GitHub account:
+
+```powershell
+git config --global user.name  "Your Name"
+git config --global user.email "you@example.com"
+```
+
+This name and email are attached to every commit you make, so we can tell who changed what.
+
+### 2.3 Sign in to GitHub
+
+You don't need SSH keys or tokens. Git Credential Manager handles sign-in:
+
+- The **first time** you clone, pull, or push, a window pops up asking you to sign in to GitHub.
+- Choose **"Sign in with your browser"**, log in, and click **Authorize**.
+- Git remembers the login after that.
+
+In VS Code you can also click the **Accounts** icon (bottom-left person icon) → **Sign in with GitHub**. This lets VS Code's built-in Source Control panel talk to GitHub too.
+
+### 2.4 Clone the repository to a folder on your computer
+
+"Cloning" downloads the whole project, including its history, and links your local folder to GitHub.
+
+**Option A: from a terminal**
+
+```powershell
+# go to (or create) the folder where you keep class projects
+mkdir $HOME\ClassProjects
+cd $HOME\ClassProjects
+
+# download the repo; this creates a ME500ProjectReport folder
+git clone https://github.com/johnfryaniv-creator/ME500ProjectReport.git
+
+# open it in VS Code
+code ME500ProjectReport
+```
+
+**Option B: from VS Code**
+
+1. Press `Ctrl+Shift+P` → type **Git: Clone** → Enter.
+2. Paste `https://github.com/johnfryaniv-creator/ME500ProjectReport.git`.
+3. Pick the parent folder (e.g. `C:\Users\<you>\ClassProjects`).
+4. Click **Open** when VS Code asks whether to open the cloned repository.
+
+> Always open the **`ME500ProjectReport` folder** in VS Code (File → Open Folder), not a single `.tex` file.
+> LaTeX Workshop and Git both work best when the whole repo is open.
+
+### 2.5 Test that everything works
+
+1. Open `project/main.tex`.
+2. Press `Ctrl+Alt+B` to build. The first build can take a few minutes while MiKTeX downloads packages. Click "Install" if any MiKTeX pop-ups appear.
+3. Press `Ctrl+Alt+V` to view the PDF.
+
+If you see the report, your setup works.
+
+---
+
+## 3. Workflow: how to avoid conflicts
+
+A **merge conflict** happens when both of us change the **same lines of the same file**
+and then both push. Git can't tell which version is right, so a person has to fix it by hand.
+The habits below make conflicts rare, and easy to fix when they do happen.
+
+### 3.1 The big idea: one person per section
+
+The report is already split into one file per section (`project/sections/01_...` to `09_...`).
+
+- **Agree on who owns which sections before you start** (text message, a note, whatever works). For example:
+
+  | Section file | Owner |
+  |---|---|
+  | `01`–`04` | Partner A |
+  | `05`–`09` | Partner B |
+
+- **Work on one section at a time, and only edit sections you own.**
+  If you spot a typo in your partner's section, **tell them** rather than fixing it yourself.
+- **Shared files** need extra care: `main.tex` (preamble, packages, `\newcommand`s, the `\input` list)
+  and `README.md`. Before editing one of these, **tell your partner**, make the change, then commit and push it **right away**.
+- Adding a new section? Create a new file (e.g. `sections/10_appendix.tex`), add one `\input` line in `main.tex`, and push it quickly.
+
+### 3.2 The daily routine: Pull → Edit → Commit → Pull → Push
+
+**Every time you sit down to work:**
+
+```powershell
+git pull                      # 1. get your partner's latest work FIRST
+```
+
+**Edit** your section, building often (`Ctrl+Alt+B`) so you know it still compiles.
+
+**When you finish a chunk of work** (a paragraph, a derivation, a figure):
+
+```powershell
+git status                    # 2. see which files you changed
+git add project/sections/05_spatial_solution.tex   # 3. stage the file(s) you changed
+git commit -m "Add boundary-condition derivation to spatial solution"   # 4. save a snapshot
+git pull                      # 5. grab anything your partner pushed meanwhile
+git push                      # 6. upload your commit to GitHub
+```
+
+You can do the same thing with VS Code's **Source Control** panel (`Ctrl+Shift+G`):
+
+1. Changed files appear under **Changes**. Click **+** next to a file to stage it.
+2. Type a message in the box at the top and press **Commit** (or `Ctrl+Enter`).
+3. Click **Sync Changes**. This pulls, then pushes.
+4. The **⟳ / ↓ / ↑** indicator in the bottom-left status bar shows whether you're behind or ahead of GitHub. Clicking it also syncs.
+
+### 3.3 Writing good commit messages
+
+- Say **what** changed in a short sentence: `Fix sign error in eq. 4.3`, `Add damping plot to illustration`.
+- Avoid messages like `update`, `stuff`, `asdf`. Six weeks from now you'll want to know which commit broke the plot.
+- One commit per logical change is better than one huge commit at the end of the day.
+
+### 3.4 If a conflict happens anyway
+
+When you `git pull`, Git may say `CONFLICT (content): Merge conflict in <file>`. Don't panic:
+
+1. Open the file in VS Code. Conflicting areas are highlighted:
+   ```
+   <<<<<<< HEAD
+   your version
+   =======
+   your partner's version
+   >>>>>>> origin/main
+   ```
+2. Click **Accept Current Change**, **Accept Incoming Change**, or **Accept Both Changes** above the block, or edit the text by hand. Make sure all the `<<<<<<<`, `=======`, `>>>>>>>` lines are gone.
+3. Build the PDF to make sure it still compiles.
+4. Stage the file, commit, and push:
+   ```powershell
+   git add <file>
+   git commit -m "Merge partner's changes to section 3"
+   git push
+   ```
+5. If you're unsure, **stop and call your partner** before choosing whose version to keep.
+
+To abandon a merge that's gone wrong and get back to where you were before the pull: `git merge --abort`.
+
+### 3.5 Dos and Don'ts
+
+**Do**
+
+- ✅ `git pull` **before** you start working, every time.
+- ✅ Commit and push **small and often**, at least at the end of every work session.
+- ✅ Make sure the document **compiles** before you push. Don't leave your partner a broken build.
+- ✅ Stick to the sections you own. Talk before touching shared files (`main.tex`).
+- ✅ Tell your partner when you've pushed something they depend on (a new package, a new `\newcommand`, a new equation label they'll `\cref`).
+- ✅ Use **unique, prefixed labels** so two people never pick the same name, e.g. `\label{eq:ode:general}`, `\label{fig:illus:damping}`.
+- ✅ Put **each sentence on its own line** in the `.tex` files. LaTeX ignores single line breaks, and Git compares line by line, so this keeps diffs small and conflicts rare.
+
+**Don't**
+
+- ❌ Don't edit a section your partner is working on without asking.
+- ❌ Don't commit build files (`.aux`, `.log`, `.synctex.gz`, `.pdf`, ...). `.gitignore` already blocks them, so please don't force-add them.
+- ❌ Don't use `git push --force`. It can permanently delete your partner's work on GitHub.
+- ❌ Don't reformat or re-wrap a whole file (e.g. an auto-formatter). Every line changes, and any concurrent edit becomes a conflict.
+- ❌ Don't rename or move section files without agreeing first.
+- ❌ Don't let work pile up for days without pushing. The longer you wait, the bigger the conflict.
+- ❌ Don't edit files directly on the GitHub website while you have uncommitted local changes.
+
+---
+
+## 4. Useful LaTeX Workshop features
+
+| Action | Shortcut | Notes |
+|---|---|---|
+| **Build (compile) the PDF** | `Ctrl+Alt+B` | Also runs automatically every time you **save** (`Ctrl+S`) by default. |
+| **View the PDF** | `Ctrl+Alt+V` | Opens the PDF in a VS Code tab. Drag the tab to the right to see source and PDF side by side. |
+| **Jump from PDF to source** (inverse search) | `Ctrl+Click` on the PDF | Click any word or equation in the rendered PDF, and the editor jumps to the line in the `.tex` file that produced it, even if it's in a section file. |
+| **Jump from source to PDF** (forward search) | `Ctrl+Alt+J` | Put the cursor on a line in the `.tex` file and press this. The PDF scrolls to that spot and highlights it. |
+| **Clean build files** | `Ctrl+Alt+C` | Deletes `.aux`, `.log`, etc. Try this first when a build fails for no obvious reason. |
+| **See errors / warnings** | `Ctrl+Shift+M` (Problems panel) | Clicking an error jumps to the bad line. The full log is under the TeX sidebar → **View Log**. |
+| **TeX sidebar** | TeX icon in the Activity Bar | **Structure** view (outline of all sections, equations, figures, clickable), build commands, and snippet panels for math symbols. |
+| **Hover previews** | hover the mouse | Hovering over math (`$...$`, `equation`), a `\ref`/`\cref`, or a `\cite` shows a rendered preview. |
+| **Autocomplete** | just type | Type `\` for commands, `\ref{` / `\cref{` for a list of your labels, `\begin{` for environments. |
+| **Snippets** | type `@` | e.g. `@a` → `\alpha`, `@b` → `\beta`, `@/` → `\frac{}{}`, `@8` → `\infty`. Use `BEQ` + Tab for an `equation` block. |
+| **Bold / italic** | `Ctrl+L, Ctrl+B` / `Ctrl+L, Ctrl+I` | Wraps the selected text in `\textbf{}` / `\textit{}`. |
+
+### Tips for this repo
+
+- **Build from any file.** Because `main.tex` `\input`s every section, LaTeX Workshop normally
+  works out that `main.tex` is the root file even when you're editing a section. If it ever builds
+  the wrong file, add this as the **first line** of the section file:
+  ```latex
+  % !TEX root = ../main.tex
+  ```
+- **If the build hangs or MiKTeX keeps asking for packages**, open MiKTeX Console and update it (§1.2), then `Ctrl+Alt+C` and build again.
+- **Turn off build-on-save** if it gets annoying: `Ctrl+,` → search `latex-workshop.latex.autoBuild.run` → set to `never`. Then build manually with `Ctrl+Alt+B`.
+- The PDF isn't committed (see `.gitignore`). Each person builds their own copy locally. Whoever submits builds the final PDF from the latest `main`.

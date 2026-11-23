@@ -18,3 +18,7 @@
 *.vrb
 *.xdv
 *.pdf
+
+# Python
+__pycache__/
+*.pyc

@@ -1,6 +1,7 @@
 # ME500 Project Report
 
 LaTeX source for the ME500 project report, *Steady-State Harmonic Response of a Kelvin–Voigt Rod*.
+This repo also has a separate branch edited by Claude to generate figures. This is designed not create conflicts with the report writing.
 Two people work on this repository at the same time, so this README covers:
 
 1. [Setting up your computer](#1-setting-up-your-computer) (MiKTeX, Strawberry Perl, VS Code + LaTeX Workshop, Git)
